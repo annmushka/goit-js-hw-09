@@ -52,10 +52,11 @@ function onBtnStartClick() {
 }
 
 function getValues({ days, hours, minutes, seconds }) {
-  timerDaysRef.textContent = addLeadingZero(days);
-  timerHoursRef.textContent = addLeadingZero(hours);
-  timerMinutesRef.textContent = addLeadingZero(minutes);
-  timerSecondsRef.textContent = addLeadingZero(seconds);
+  const timeValues = [days, hours, minutes, seconds];
+  const timeRefs = [timerDaysRef, timerHoursRef, timerMinutesRef, timerSecondsRef];
+  for (let i = 0; i < timeValues.length; i++) {
+    timeRefs[i].textContent = addLeadingZero(timeValues[i]);
+  }
 }
 
 function addLeadingZero(value) {
