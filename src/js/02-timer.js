@@ -3,10 +3,6 @@ import 'flatpickr/dist/flatpickr.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const btnStart = document.querySelector('button[data-start]');
-const timerDaysRef = document.querySelector('span[data-days]');
-const timerHoursRef = document.querySelector('span[data-hours]');
-const timerMinutesRef = document.querySelector('span[data-minutes]');
-const timerSecondsRef = document.querySelector('span[data-seconds]');
 
 let intervalId = null;
 
@@ -34,6 +30,7 @@ const flatpickrObj = flatpickr('#datetime-picker', options);
 
 btnStart.addEventListener('click', onBtnStartClick);
 
+
 function onBtnStartClick() {
   intervalId = setInterval(() => {
     btnStart.disabled = true;
@@ -45,19 +42,17 @@ function onBtnStartClick() {
       btnStart.disabled = false;
       return;
     }
-
     getValues(convertMs(difference));
-
   }, 1000);
 }
 
-function getValues({ days, hours, minutes, seconds }) {
-  const timeValues = [days, hours, minutes, seconds];
-  const timeRefs = [timerDaysRef, timerHoursRef, timerMinutesRef, timerSecondsRef];
-  for (let i = 0; i < timeValues.length; i++) {
-    timeRefs[i].textContent = addLeadingZero(timeValues[i]);
-  }
+
+function getValues(convertMs) {
+  Object.keys(convertMs).forEach(key => {
+    document.querySelector(`span[data-${key}]`).textContent = addLeadingZero(convertMs[key])
+  })
 }
+
 
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
